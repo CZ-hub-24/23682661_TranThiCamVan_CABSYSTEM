@@ -37,3 +37,18 @@
 | BG07 | Cung cấp báo cáo hoạt động | Hỗ trợ thống kê số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu suất tài xế. | Hỗ trợ doanh nghiệp theo dõi tình hình hoạt động và đưa ra quyết định quản lý. |
 | BG08 | Đảm bảo an toàn và khả năng mở rộng | Bảo vệ dữ liệu người dùng, phương tiện, vị trí và giao dịch; đồng thời thiết kế hệ thống có khả năng mở rộng khi bổ sung dịch vụ hoặc nhà cung cấp mới. | Hệ thống hoạt động ổn định, an toàn và có thể phát triển trong tương lai. |
 
+## 4. MVP MODULES
+
+| ID | Module | Main Functions | Main Stakeholders |
+|---|---|---|---|
+| MVP01 | Quản lý tài khoản | Đăng ký, đăng nhập, quản lý thông tin cá nhân của khách hàng và tài xế. | Khách hàng, Tài xế |
+| MVP02 | Đặt xe | Nhập điểm đón, điểm trả, chọn loại xe và gửi yêu cầu đặt xe. | Khách hàng |
+| MVP03 | Tìm kiếm và phân công tài xế | Tìm tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và tiêu chí vận hành; tự động tiếp tục tìm tài xế khác nếu tài xế từ chối hoặc không phản hồi. | Khách hàng, Tài xế, Nhân viên vận hành |
+| MVP04 | Quản lý chuyến xe | Nhận chuyến, chấp nhận/từ chối chuyến và cập nhật trạng thái: đã đến điểm đón, đã đón khách, đang di chuyển và hoàn thành chuyến. | Tài xế, Nhân viên vận hành |
+| MVP05 | Theo dõi chuyến xe | Theo dõi trạng thái chuyến, vị trí/thông tin tài xế và thời gian dự kiến đến. | Khách hàng |
+| MVP06 | Thanh toán | Tính cước chuyến đi và hỗ trợ thanh toán bằng tiền mặt hoặc thanh toán điện tử. | Khách hàng, Nhà cung cấp thanh toán |
+| MVP07 | Thông báo | Gửi thông báo về việc đặt xe, phân công tài xế, tài xế đến điểm đón, hoàn thành chuyến và kết quả thanh toán. | Khách hàng, Tài xế |
+| MVP08 | Đánh giá chuyến đi | Cho phép khách hàng đánh giá chuyến đi sau khi hoàn thành. | Khách hàng |
+| MVP09 | Quản lý vận hành | Quản lý khách hàng, tài xế, phương tiện, chuyến xe, trạng thái tài xế và lịch sử giao dịch. | Nhân viên vận hành |
+| MVP10 | Báo cáo | Thống kê số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu suất tài xế. | Nhân viên vận hành, Ban lãnh đạo |
+

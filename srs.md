@@ -74,3 +74,80 @@
 | BR16 | Khả năng mở rộng | Hệ thống có khả năng mở rộng khi bổ sung dịch vụ, phương thức thanh toán hoặc nhà cung cấp thông báo mới. | Should Have |
 | BR17 | Tính ổn định | Hệ thống phải hoạt động ổn định khi nhu cầu đặt xe tăng cao. | Must Have |
 
+## 6. BUSINESS PROCESS MODELING
+
+### 6.1 Customer Booking Process
+
+| Step | Actor | Business Process |
+|---|---|---|
+| 1 | Customer | Đăng nhập vào hệ thống. |
+| 2 | Customer | Nhập điểm đón và điểm trả. |
+| 3 | Customer | Chọn loại xe và gửi yêu cầu đặt xe. |
+| 4 | CAB System | Tiếp nhận yêu cầu đặt xe. |
+| 5 | CAB System | Tìm kiếm tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và tiêu chí vận hành. |
+| 6 | CAB System | Gửi yêu cầu chuyến xe đến tài xế phù hợp. |
+| 7 | Driver | Chấp nhận hoặc từ chối chuyến xe. |
+| 8 | CAB System | Nếu tài xế từ chối hoặc không phản hồi, tiếp tục tìm tài xế khác. |
+| 9 | CAB System | Thông báo kết quả phân công cho khách hàng. |
+| 10 | Customer | Theo dõi thông tin và trạng thái chuyến xe. |
+
+### 6.2 Trip Management Process
+
+| Step | Actor | Business Process |
+|---|---|---|
+| 1 | Driver | Nhận và chấp nhận chuyến xe. |
+| 2 | Driver | Di chuyển đến điểm đón. |
+| 3 | Driver | Cập nhật trạng thái đã đến điểm đón. |
+| 4 | Driver | Đón khách và cập nhật trạng thái đã đón khách. |
+| 5 | Driver | Di chuyển đến điểm trả. |
+| 6 | Driver | Cập nhật trạng thái đang di chuyển. |
+| 7 | Driver | Hoàn thành chuyến xe. |
+| 8 | CAB System | Cập nhật trạng thái chuyến xe thành hoàn thành. |
+| 9 | CAB System | Tính cước chuyến đi. |
+
+### 6.3 Payment Process
+
+| Step | Actor | Business Process |
+|---|---|---|
+| 1 | CAB System | Tính số tiền cần thanh toán sau khi chuyến xe hoàn thành. |
+| 2 | Customer | Chọn phương thức thanh toán. |
+| 3 | Customer | Thanh toán bằng tiền mặt hoặc thanh toán điện tử. |
+| 4 | Payment Provider | Xử lý giao dịch thanh toán điện tử. |
+| 5 | CAB System | Nhận kết quả giao dịch. |
+| 6 | CAB System | Thông báo kết quả thanh toán cho khách hàng. |
+| 7 | CAB System | Cho phép thực hiện lại giao dịch nếu thanh toán thất bại theo chính sách. |
+
+### 6.4 Driver Assignment Process
+
+| Step | Actor | Business Process |
+|---|---|---|
+| 1 | CAB System | Nhận yêu cầu đặt xe từ khách hàng. |
+| 2 | CAB System | Kiểm tra các tài xế đang sẵn sàng. |
+| 3 | CAB System | Xác định tài xế phù hợp dựa trên vị trí và tiêu chí vận hành. |
+| 4 | CAB System | Gửi yêu cầu chuyến xe cho tài xế. |
+| 5 | Driver | Chấp nhận hoặc từ chối yêu cầu. |
+| 6 | CAB System | Nếu tài xế từ chối hoặc không phản hồi, tiếp tục tìm tài xế khác. |
+| 7 | CAB System | Nếu tìm được tài xế, xác nhận phân công chuyến. |
+| 8 | CAB System | Nếu không tìm được tài xế, thông báo cho khách hàng. |
+
+### 6.5 Notification Process
+
+| Step | Trigger | Notification |
+|---|---|---|
+| 1 | Khách hàng đặt xe | Thông báo yêu cầu đặt xe. |
+| 2 | Tài xế được phân công | Thông báo thông tin tài xế cho khách hàng. |
+| 3 | Tài xế đến điểm đón | Thông báo cho khách hàng. |
+| 4 | Chuyến xe hoàn thành | Thông báo hoàn thành chuyến. |
+| 5 | Thanh toán hoàn tất | Thông báo kết quả thanh toán. |
+| 6 | Có chuyến mới | Thông báo cho tài xế. |
+| 7 | Có thay đổi chuyến xe | Thông báo cho tài xế. |
+
+### 6.6 Post-Trip Rating Process
+
+| Step | Actor | Business Process |
+|---|---|---|
+| 1 | CAB System | Xác nhận chuyến xe đã hoàn thành. |
+| 2 | Customer | Nhận yêu cầu đánh giá chuyến đi. |
+| 3 | Customer | Đánh giá chuyến xe. |
+| 4 | CAB System | Lưu kết quả đánh giá. |
+| 5 | Operations Staff | Sử dụng thông tin đánh giá để theo dõi chất lượng dịch vụ. |

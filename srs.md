@@ -411,3 +411,111 @@ Customer / Driver
         │
         ▼
    Notification
+
+## 15. USE CASES
+
+### 15.1 Danh sách Use Case
+
+| Mã | Use Case | Actor chính | Mô tả |
+|---|---|---|---|
+| UC01 | Đăng ký tài khoản | Khách hàng | Khách hàng tạo tài khoản để sử dụng hệ thống. |
+| UC02 | Đăng nhập | Khách hàng, Tài xế | Người dùng đăng nhập vào hệ thống để sử dụng các chức năng được phân quyền. |
+| UC03 | Quản lý thông tin cá nhân | Khách hàng, Tài xế | Người dùng xem và cập nhật thông tin cá nhân. |
+| UC04 | Quản lý phương tiện | Tài xế, Nhân viên vận hành | Quản lý thông tin phương tiện của tài xế. |
+| UC05 | Đặt xe | Khách hàng | Khách hàng nhập điểm đón, điểm trả, chọn loại xe và gửi yêu cầu đặt xe. |
+| UC06 | Tìm kiếm tài xế | Hệ thống | Hệ thống tìm tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và tiêu chí vận hành. |
+| UC07 | Nhận yêu cầu chuyến xe | Tài xế | Tài xế nhận thông tin yêu cầu chuyến xe từ hệ thống. |
+| UC08 | Chấp nhận/Từ chối chuyến | Tài xế | Tài xế quyết định chấp nhận hoặc từ chối yêu cầu chuyến xe. |
+| UC09 | Phân công tài xế | Hệ thống | Hệ thống phân công tài xế phù hợp cho yêu cầu đặt xe. |
+| UC10 | Theo dõi chuyến xe | Khách hàng | Khách hàng theo dõi trạng thái chuyến và thông tin tài xế. |
+| UC11 | Cập nhật trạng thái chuyến | Tài xế | Tài xế cập nhật trạng thái chuyến trong quá trình thực hiện. |
+| UC12 | Tính cước | Hệ thống | Hệ thống tính cước dựa trên loại dịch vụ và thông tin chuyến đi. |
+| UC13 | Thanh toán | Khách hàng | Khách hàng thanh toán bằng tiền mặt hoặc thanh toán điện tử. |
+| UC14 | Gửi thông báo | Hệ thống | Hệ thống gửi thông báo đến khách hàng hoặc tài xế khi có sự kiện liên quan. |
+| UC15 | Đánh giá chuyến xe | Khách hàng | Khách hàng đánh giá chuyến xe sau khi hoàn thành. |
+| UC16 | Quản lý khách hàng | Nhân viên vận hành | Nhân viên vận hành quản lý thông tin khách hàng. |
+| UC17 | Quản lý tài xế | Nhân viên vận hành | Nhân viên vận hành quản lý thông tin và trạng thái tài xế. |
+| UC18 | Quản lý chuyến xe | Nhân viên vận hành | Nhân viên vận hành theo dõi và quản lý các chuyến xe. |
+| UC19 | Xem lịch sử giao dịch | Nhân viên vận hành | Nhân viên vận hành tra cứu lịch sử giao dịch. |
+| UC20 | Xem báo cáo | Nhân viên vận hành | Nhân viên vận hành xem các báo cáo về chuyến xe, doanh thu và hiệu suất tài xế. |
+
+### 15.2 Use Case chính của hệ thống
+
+| Use Case | Actor | Luồng chính |
+|---|---|---|
+| Đặt xe | Khách hàng | Đăng nhập → Nhập điểm đón/trả → Chọn loại xe → Gửi yêu cầu → Hệ thống tìm tài xế → Xác nhận tài xế. |
+| Phân công tài xế | Hệ thống, Tài xế | Tìm tài xế phù hợp → Gửi yêu cầu → Tài xế chấp nhận → Phân công chuyến. |
+| Thực hiện chuyến xe | Tài xế | Đến điểm đón → Đón khách → Di chuyển → Hoàn thành chuyến. |
+| Thanh toán | Khách hàng, Hệ thống, Nhà cung cấp thanh toán | Tính cước → Chọn phương thức → Thanh toán → Nhận kết quả → Cập nhật trạng thái. |
+| Đánh giá chuyến xe | Khách hàng | Chuyến xe hoàn thành → Khách hàng đánh giá → Hệ thống lưu đánh giá. |
+| Quản lý vận hành | Nhân viên vận hành | Quản lý khách hàng → Quản lý tài xế → Quản lý phương tiện → Theo dõi chuyến → Xem giao dịch và báo cáo. |
+
+### 15.3 Luồng Use Case đặt xe
+
+```text
+Khách hàng
+    │
+    ▼
+Đăng nhập
+    │
+    ▼
+Nhập điểm đón + điểm trả
+    │
+    ▼
+Chọn loại xe
+    │
+    ▼
+Gửi yêu cầu đặt xe
+    │
+    ▼
+Hệ thống tìm tài xế
+    │
+    ▼
+Có tài xế phù hợp?
+   / \
+  Có  Không
+  │     │
+  ▼     ▼
+Gửi yêu  Thông báo
+cầu      không có
+  │      tài xế
+  ▼
+Tài xế chấp nhận?
+   / \
+  Có  Không
+  │     │
+  ▼     ▼
+Phân công   Tìm tài xế khác
+tài xế
+  │
+  ▼
+Thông báo khách hàng
+  │
+  ▼
+Theo dõi chuyến xe
+| ID   | Chức năng                  | Tiêu chí nghiệm thu                                                                                                                      |
+| ---- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| AC01 | Đăng ký tài khoản          | Khách hàng có thể đăng ký tài khoản với thông tin hợp lệ và hệ thống tạo tài khoản thành công.                                           |
+| AC02 | Đăng nhập                  | Khách hàng và tài xế có thể đăng nhập bằng thông tin tài khoản hợp lệ. Nếu thông tin không hợp lệ, hệ thống phải thông báo lỗi.          |
+| AC03 | Quản lý thông tin cá nhân  | Khách hàng và tài xế có thể xem và cập nhật thông tin cá nhân của mình.                                                                  |
+| AC04 | Quản lý phương tiện        | Tài xế hoặc nhân viên vận hành có thể thêm, cập nhật và quản lý thông tin phương tiện.                                                   |
+| AC05 | Đặt xe                     | Khách hàng có thể nhập điểm đón, điểm trả và loại xe để tạo yêu cầu đặt xe thành công.                                                   |
+| AC06 | Phân công tài xế           | Hệ thống tìm kiếm và phân công tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và các tiêu chí vận hành.                             |
+| AC07 | Từ chối chuyến             | Khi tài xế từ chối hoặc không phản hồi yêu cầu, hệ thống tiếp tục tìm tài xế khác mà không yêu cầu khách hàng đặt lại chuyến.            |
+| AC08 | Không có tài xế            | Nếu không tìm được tài xế phù hợp, hệ thống phải thông báo cho khách hàng.                                                               |
+| AC09 | Theo dõi chuyến xe         | Khách hàng có thể xem trạng thái chuyến xe và thông tin tài xế sau khi chuyến được phân công.                                            |
+| AC10 | Cập nhật trạng thái chuyến | Tài xế có thể cập nhật trạng thái theo đúng quy trình: **đã đến điểm đón → đã đón khách → đang di chuyển → hoàn thành**.                 |
+| AC11 | Tính cước                  | Khi chuyến xe hoàn thành, hệ thống tính và hiển thị cước phí của chuyến xe.                                                              |
+| AC12 | Thanh toán                 | Khách hàng có thể thanh toán bằng tiền mặt hoặc phương thức thanh toán điện tử được hỗ trợ.                                              |
+| AC13 | Thanh toán thất bại        | Khi thanh toán điện tử thất bại, hệ thống phải thông báo cho khách hàng và cho phép thực hiện lại theo chính sách của hệ thống.          |
+| AC14 | Bảo mật thanh toán         | Hệ thống CAB không lưu trực tiếp thông tin nhạy cảm của thẻ hoặc tài khoản thanh toán.                                                   |
+| AC15 | Thông báo                  | Hệ thống gửi thông báo khi có các sự kiện quan trọng như phân công tài xế, tài xế đến điểm đón, hoàn thành chuyến và kết quả thanh toán. |
+| AC16 | Đánh giá chuyến xe         | Sau khi chuyến xe hoàn thành, khách hàng có thể đánh giá và nhận xét về chuyến đi.                                                       |
+| AC17 | Quản lý khách hàng         | Nhân viên vận hành có thể xem và quản lý thông tin khách hàng theo quyền được cấp.                                                       |
+| AC18 | Quản lý tài xế             | Nhân viên vận hành có thể quản lý thông tin, trạng thái hoạt động và phương tiện của tài xế.                                             |
+| AC19 | Quản lý chuyến xe          | Nhân viên vận hành có thể theo dõi và quản lý các chuyến xe, bao gồm chuyến đang hoạt động và chuyến đã hoàn thành.                      |
+| AC20 | Quản lý giao dịch          | Nhân viên vận hành có thể xem lịch sử giao dịch và trạng thái thanh toán.                                                                |
+| AC21 | Báo cáo                    | Hệ thống cung cấp các báo cáo về số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu suất tài xế.                            |
+| AC22 | Phân quyền                 | Người dùng chỉ được truy cập các chức năng phù hợp với vai trò của mình.                                                                 |
+| AC23 | Bảo vệ dữ liệu             | Thông tin cá nhân, thông tin phương tiện, vị trí và thông tin giao dịch phải được bảo vệ khỏi truy cập trái phép.                        |
+| AC24 | Ổn định hệ thống           | Hệ thống vẫn phải hoạt động ổn định khi nhu cầu đặt xe tăng cao và khi một thành phần gặp sự cố.                                         |

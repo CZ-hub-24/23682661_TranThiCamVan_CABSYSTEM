@@ -11,46 +11,56 @@
 | **Business Analyst (BA)** | Xác định phạm vi, tác nhân, quy trình nghiệp vụ, yêu cầu chức năng/phi chức năng, quy tắc nghiệp vụ, trường hợp ngoại lệ và làm rõ các yêu cầu chưa xác định. |
 | **Nhóm phát triển (Development Team)** | Xây dựng và triển khai CAB System dựa trên các yêu cầu đã được BA làm rõ với các bên liên quan. |
 
-## 2. STAKEHOLDER MATRIX
+## 2. Stakeholder Matrix
 
-| Stakeholder | Power | Interest | Expectation / Need | Management Strategy |
-|---|---|---|---|---|
-| Khách hàng | Cao | Cao | Đặt xe nhanh, dễ dàng; theo dõi chuyến đi; biết thông tin tài xế; thanh toán và đánh giá tài xế. | Manage Closely |
-| Tài xế | Cao | Cao | Nhận chuyến phù hợp; biết thông tin chuyến; cập nhật trạng thái và vị trí; quản lý hồ sơ và phương tiện. | Manage Closely |
-| Nhân viên vận hành | Cao | Cao | Quản lý khách hàng, tài xế, phương tiện, chuyến đi và xử lý các trường hợp phát sinh. | Manage Closely |
-| Ban lãnh đạo doanh nghiệp | Cao | Trung bình | Theo dõi số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu quả hoạt động của tài xế. | Keep Satisfied |
-| Nhà cung cấp dịch vụ thanh toán | Cao | Trung bình | Cung cấp dịch vụ thanh toán điện tử ổn định và an toàn. | Keep Satisfied |
-| Nhà cung cấp dịch vụ thông báo | Trung bình | Trung bình | Đảm bảo gửi thông báo liên quan đến đặt xe, chuyến đi và thanh toán. | Keep Informed |
-| Business Analyst (BA) | Cao | Cao | Làm rõ yêu cầu, quy trình nghiệp vụ và các vấn đề chưa được xác định. | Manage Closely |
-| Nhóm phát triển hệ thống | Cao | Cao | Có yêu cầu rõ ràng để phân tích, thiết kế, xây dựng và triển khai hệ thống. | Manage Closely |
+Ma trận dưới đây đánh giá mức độ quan tâm (Interest) và mức độ ảnh hưởng (Power) của từng stakeholder đối với dự án, làm cơ sở xác định cách thức trao đổi và mức độ ưu tiên khi thu thập/xác nhận yêu cầu.
 
-## 3. BUSINESS GOALS
+### Stakeholder Matrix - CAB System
 
-| ID | Business Goal | Description | Expected Outcome |
-|---|---|---|---|
-| BG01 | Đơn giản hóa quy trình đặt xe | Cung cấp nền tảng giúp khách hàng nhập điểm đón, điểm trả, chọn loại xe và thực hiện đặt xe một cách nhanh chóng, thuận tiện. | Khách hàng có thể đặt xe dễ dàng và giảm thời gian thực hiện đặt xe. |
-| BG02 | Tự động hóa việc phân công tài xế | Hệ thống tự động tìm kiếm và phân công tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và các tiêu chí vận hành. | Giảm thao tác thủ công và tăng hiệu quả phân công chuyến xe. |
-| BG03 | Theo dõi và quản lý chuyến xe | Cho phép khách hàng theo dõi trạng thái chuyến đi, thông tin tài xế và thời gian dự kiến đến; đồng thời hỗ trợ nhân viên vận hành quản lý các chuyến đang hoạt động. | Tăng khả năng kiểm soát và minh bạch trong quá trình phục vụ khách hàng. |
-| BG04 | Hỗ trợ thanh toán linh hoạt | Hỗ trợ thanh toán bằng tiền mặt hoặc thanh toán điện tử thông qua nhà cung cấp dịch vụ thanh toán bên ngoài. | Tạo sự thuận tiện cho khách hàng và đảm bảo kết quả thanh toán được cập nhật trên hệ thống. |
-| BG05 | Nâng cao chất lượng dịch vụ | Cho phép khách hàng đánh giá chuyến đi sau khi hoàn thành và cung cấp thông tin để theo dõi hiệu suất tài xế. | Có cơ sở để đánh giá và cải thiện chất lượng dịch vụ. |
-| BG06 | Hỗ trợ quản lý và vận hành | Cung cấp chức năng quản lý khách hàng, tài xế, phương tiện, chuyến xe, trạng thái tài xế và lịch sử giao dịch. | Nhân viên vận hành có thể quản lý hoạt động của hệ thống hiệu quả hơn. |
-| BG07 | Cung cấp báo cáo hoạt động | Hỗ trợ thống kê số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu suất tài xế. | Hỗ trợ doanh nghiệp theo dõi tình hình hoạt động và đưa ra quyết định quản lý. |
-| BG08 | Đảm bảo an toàn và khả năng mở rộng | Bảo vệ dữ liệu người dùng, phương tiện, vị trí và giao dịch; đồng thời thiết kế hệ thống có khả năng mở rộng khi bổ sung dịch vụ hoặc nhà cung cấp mới. | Hệ thống hoạt động ổn định, an toàn và có thể phát triển trong tương lai. |
+| | **Low Interest** | **High Interest** |
+|---|---|---|
+| **High Power** | **Keep Satisfied** <br><br> • Nhà cung cấp thanh toán | **Manage Closely** <br><br> • Ban lãnh đạo <br> • Nhân viên vận hành |
+| **Low Power** | **Monitor** <br><br> • Nhà cung cấp thông báo | **Keep Informed** <br><br> • Khách hàng <br> • Tài xế |
 
-## 4. MVP MODULES
+### Cách tiếp cận Stakeholder
 
-| ID | Module | Main Functions | Main Stakeholders |
-|---|---|---|---|
-| MVP01 | Quản lý tài khoản | Đăng ký, đăng nhập, quản lý thông tin cá nhân của khách hàng và tài xế. | Khách hàng, Tài xế |
-| MVP02 | Đặt xe | Nhập điểm đón, điểm trả, chọn loại xe và gửi yêu cầu đặt xe. | Khách hàng |
-| MVP03 | Tìm kiếm và phân công tài xế | Tìm tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và tiêu chí vận hành; tự động tiếp tục tìm tài xế khác nếu tài xế từ chối hoặc không phản hồi. | Khách hàng, Tài xế, Nhân viên vận hành |
-| MVP04 | Quản lý chuyến xe | Nhận chuyến, chấp nhận/từ chối chuyến và cập nhật trạng thái: đã đến điểm đón, đã đón khách, đang di chuyển và hoàn thành chuyến. | Tài xế, Nhân viên vận hành |
-| MVP05 | Theo dõi chuyến xe | Theo dõi trạng thái chuyến, vị trí/thông tin tài xế và thời gian dự kiến đến. | Khách hàng |
-| MVP06 | Thanh toán | Tính cước chuyến đi và hỗ trợ thanh toán bằng tiền mặt hoặc thanh toán điện tử. | Khách hàng, Nhà cung cấp thanh toán |
-| MVP07 | Thông báo | Gửi thông báo về việc đặt xe, phân công tài xế, tài xế đến điểm đón, hoàn thành chuyến và kết quả thanh toán. | Khách hàng, Tài xế |
-| MVP08 | Đánh giá chuyến đi | Cho phép khách hàng đánh giá chuyến đi sau khi hoàn thành. | Khách hàng |
-| MVP09 | Quản lý vận hành | Quản lý khách hàng, tài xế, phương tiện, chuyến xe, trạng thái tài xế và lịch sử giao dịch. | Nhân viên vận hành |
-| MVP10 | Báo cáo | Thống kê số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu suất tài xế. | Nhân viên vận hành, Ban lãnh đạo |
+| Stakeholder | Quadrant | Cách tiếp cận |
+|---|---|---|
+| **Ban lãnh đạo** | Manage Closely | Trao đổi thường xuyên, xác nhận mục tiêu kinh doanh và các chỉ số báo cáo. |
+| **Nhân viên vận hành** | Manage Closely | Thu thập chi tiết nghiệp vụ vận hành hằng ngày, xác nhận quy trình xử lý ngoại lệ. |
+| **Khách hàng** | Keep Informed | Thu thập kỳ vọng trải nghiệm sử dụng, thông báo tiến độ khi cần. |
+| **Tài xế** | Keep Informed | Thu thập kỳ vọng về quy trình nhận chuyến và cập nhật trạng thái. |
+| **Nhà cung cấp thanh toán** | Keep Satisfied | Xác nhận chuẩn tích hợp và yêu cầu bảo mật giao dịch. |
+| **Nhà cung cấp thông báo** | Monitor | Xác nhận các kênh thông báo hỗ trợ và khả năng mở rộng. |
+
+## 3. Business Goals
+
+Các Business Goals của dự án CAB System được xác định dựa trên những vấn đề của hệ thống hiện tại và kỳ vọng phát triển lâu dài của doanh nghiệp.
+
+| ID | Business Goal | Mô tả |
+|---|---|---|
+| **BG-01** | Tự động hóa quy trình đặt và phân công xe | Giảm việc phân công tài xế thủ công bằng cách tự động tìm và ưu tiên tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và các tiêu chí vận hành. |
+| **BG-02** | Nâng cao trải nghiệm khách hàng | Cho phép khách hàng đặt xe, theo dõi trạng thái chuyến đi, biết tài xế đã nhận chuyến, thời gian dự kiến tài xế đến, xem lịch sử chuyến và đánh giá tài xế. |
+| **BG-03** | Quản lý tập trung quy trình chuyến đi và thanh toán | Quản lý xuyên suốt quá trình từ tạo yêu cầu đặt xe, thực hiện chuyến, tính cước đến thanh toán và lưu trữ thông tin giao dịch. |
+| **BG-04** | Nâng cao hiệu quả vận hành | Cung cấp công cụ cho nhân viên vận hành quản lý khách hàng, tài xế, phương tiện và chuyến đi; theo dõi hoạt động và hỗ trợ xử lý các trường hợp phát sinh. |
+| **BG-05** | Hỗ trợ quản lý và ra quyết định | Cung cấp báo cáo về số lượng chuyến, doanh thu, tỷ lệ chuyến hoàn thành, tỷ lệ hủy và hiệu quả hoạt động của tài xế. |
+| **BG-06** | Đảm bảo khả năng phục vụ khi nhu cầu tăng cao | Xây dựng hệ thống hoạt động ổn định khi tải tăng và cho phép các thành phần của hệ thống mở rộng độc lập. |
+| **BG-07** | Xây dựng nền tảng có khả năng phát triển lâu dài | Cho phép bổ sung loại dịch vụ, phương thức thanh toán, nhà cung cấp thông báo và thay đổi một số thành phần kỹ thuật mà không phải xây dựng lại toàn bộ ứng dụng. |
+
+## 4. MVP Modules
+
+MVP tập trung vào các module cần thiết để CAB System có thể vận hành được quy trình đặt xe cốt lõi trong giai đoạn đầu.
+
+| ID | Module | Chức năng chính |
+|---|---|---|
+| **M01** | Authentication & User Management | Đăng ký, đăng nhập, cập nhật thông tin cá nhân; xác thực người dùng và quản lý quyền truy cập. |
+| **M02** | Customer Booking | Cho phép khách hàng nhập điểm đón, điểm đến, chọn loại xe và gửi yêu cầu đặt xe. |
+| **M03** | Driver & Vehicle Management | Quản lý hồ sơ tài xế, thông tin phương tiện, vị trí và trạng thái sẵn sàng nhận chuyến. |
+| **M04** | Driver Matching & Assignment | Tìm và ưu tiên tài xế phù hợp dựa trên vị trí, trạng thái sẵn sàng và tiêu chí vận hành; tiếp tục tìm tài xế khác nếu tài xế từ chối hoặc không phản hồi. |
+| **M05** | Trip Management & Tracking | Quản lý vòng đời chuyến đi và các trạng thái như tài xế nhận chuyến, đến điểm đón, đón khách, đang di chuyển và hoàn thành chuyến. |
+| **M06** | Fare & Payment | Tính số tiền phải trả sau chuyến đi; hỗ trợ thanh toán tiền mặt và thanh toán điện tử thông qua nhà cung cấp bên ngoài. |
+| **M07** | Notification | Gửi thông báo về các sự kiện quan trọng như tiếp nhận yêu cầu, tài xế nhận chuyến, tài xế đến điểm đón, hoàn thành chuyến và kết quả thanh toán. |
+| **M08** | Operations & Administration | Cho phép nhân viên vận hành quản lý khách hàng, tài xế, phương tiện và chuyến đi; theo dõi chuyến đang diễn ra và hỗ trợ xử lý các trường hợp lỗi. |
 
 ## 5. BUSINESS REQUIREMENTS
 

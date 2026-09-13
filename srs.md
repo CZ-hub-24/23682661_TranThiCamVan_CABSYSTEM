@@ -1,15 +1,15 @@
-## 1. STAKEHOLDERS
+## 1. Stakeholders
 
-| STT | Stakeholder | Vai trò |
-|-----|-------------|---------|
-| 1 | Khách hàng | Người sử dụng hệ thống để đăng ký tài khoản, đăng nhập, cập nhật thông tin cá nhân, đặt xe, theo dõi chuyến đi, thanh toán và đánh giá tài xế. |
-| 2 | Tài xế | Người nhận và thực hiện chuyến xe; cập nhật thông tin cá nhân, phương tiện, trạng thái hoạt động và trạng thái chuyến đi. |
-| 3 | Nhân viên vận hành | Quản lý và giám sát hoạt động của hệ thống; quản lý khách hàng, tài xế, phương tiện và chuyến đi; hỗ trợ xử lý các trường hợp phát sinh. |
-| 4 | Ban lãnh đạo doanh nghiệp | Theo dõi tình hình hoạt động thông qua các báo cáo về số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu quả hoạt động của tài xế. |
-| 5 | Nhà cung cấp dịch vụ thanh toán | Cung cấp dịch vụ thanh toán điện tử cho hệ thống CAB System. |
-| 6 | Nhà cung cấp dịch vụ thông báo | Cung cấp các kênh gửi thông báo đến khách hàng và tài xế. |
-| 7 | Business Analyst (BA) | Làm rõ các yêu cầu với các bên liên quan, xác định phạm vi, tác nhân, quy trình nghiệp vụ, yêu cầu chức năng, yêu cầu phi chức năng và các quy tắc nghiệp vụ. |
-| 8 | Nhóm phát triển hệ thống | Phân tích, thiết kế, xây dựng và triển khai hệ thống dựa trên các yêu cầu đã được xác định trong tài liệu SRS. |
+| Stakeholder | Vai trò / Mối quan tâm đối với hệ thống |
+|---|---|
+| **Khách hàng (Customer)** | Sử dụng dịch vụ đặt xe: đăng ký/đăng nhập, đặt xe, theo dõi chuyến đi, thanh toán, xem lịch sử và đánh giá tài xế. |
+| **Tài xế (Driver)** | Nhận hoặc từ chối chuyến, cập nhật trạng thái hoạt động và trạng thái chuyến đi, cung cấp thông tin vị trí và quản lý hồ sơ/phương tiện. |
+| **Nhân viên vận hành (Operation Staff)** | Quản lý khách hàng, tài xế, phương tiện và chuyến đi; theo dõi chuyến đang diễn ra, hỗ trợ xử lý lỗi và tra cứu lịch sử giao dịch. |
+| **Ban lãnh đạo / Ban giám đốc (Management)** | Đưa ra yêu cầu và định hướng phát triển hệ thống; theo dõi báo cáo về số lượng chuyến, doanh thu, tỷ lệ hoàn thành, tỷ lệ hủy và hiệu quả hoạt động của tài xế. |
+| **Nhà cung cấp thanh toán (Payment Provider)** | Hệ thống bên ngoài được tích hợp với CAB System để xử lý các giao dịch thanh toán điện tử. |
+| **Nhà cung cấp dịch vụ thông báo (Notification Provider)** | Hỗ trợ gửi thông báo cho khách hàng và tài xế; có thể mở rộng thêm các kênh hoặc nhà cung cấp thông báo trong tương lai. |
+| **Business Analyst (BA)** | Xác định phạm vi, tác nhân, quy trình nghiệp vụ, yêu cầu chức năng/phi chức năng, quy tắc nghiệp vụ, trường hợp ngoại lệ và làm rõ các yêu cầu chưa xác định. |
+| **Nhóm phát triển (Development Team)** | Xây dựng và triển khai CAB System dựa trên các yêu cầu đã được BA làm rõ với các bên liên quan. |
 
 ## 2. STAKEHOLDER MATRIX
 

@@ -297,23 +297,128 @@ flowchart TD
 | **OQ09** | Vị trí tài xế | Chưa xác định tần suất cập nhật vị trí tài xế. | Vị trí tài xế được cập nhật với tần suất bao nhiêu để hỗ trợ tìm tài xế và dự kiến thời gian đến? |
 | **OQ10** | Phân quyền quản trị | Chưa xác định chi tiết các vai trò và quyền quản trị. | Có những vai trò quản trị nào và mỗi vai trò được phép thực hiện những chức năng nào? |
 
-## 11. NON-FUNCTIONAL REQUIREMENTS
+## 11. ERD — CAB System MVP
 
-| ID | Category | Non-Functional Requirement | Description | Priority |
-|---|---|---|---|---|
-| NFR01 | Performance | System Performance | Hệ thống phải hoạt động ổn định khi có nhu cầu đặt xe cao. | Must Have |
-| NFR02 | Scalability | System Scalability | Hệ thống phải có khả năng mở rộng các thành phần độc lập khi số lượng người dùng và chuyến xe tăng. | Should Have |
-| NFR03 | Reliability | Fault Isolation | Sự cố của một thành phần không được làm ảnh hưởng đến toàn bộ hệ thống. | Must Have |
-| NFR04 | Availability | System Availability | Hệ thống cần duy trì khả năng phục vụ khách hàng và tài xế trong quá trình sử dụng dịch vụ. | Must Have |
-| NFR05 | Security | Authentication | Hệ thống phải xác thực người dùng trước khi cho phép truy cập các chức năng yêu cầu đăng nhập. | Must Have |
-| NFR06 | Security | Access Control | Hệ thống phải kiểm soát quyền truy cập dựa trên vai trò của người dùng. | Must Have |
-| NFR07 | Security | Data Protection | Hệ thống phải bảo vệ dữ liệu cá nhân, thông tin phương tiện, vị trí và giao dịch của người dùng. | Must Have |
-| NFR08 | Security | Sensitive Payment Data | Hệ thống không được trực tiếp lưu trữ thông tin thẻ hoặc tài khoản thanh toán nhạy cảm. | Must Have |
-| NFR09 | Auditability | Audit Log | Hệ thống phải ghi nhận các hoạt động quan trọng để phục vụ kiểm tra và truy vết khi cần thiết. | Should Have |
-| NFR10 | Maintainability | Independent Components | Các thành phần của hệ thống nên có khả năng triển khai và mở rộng độc lập. | Should Have |
-| NFR11 | Extensibility | New Services | Hệ thống phải có khả năng mở rộng để hỗ trợ các dịch vụ mới trong tương lai. | Should Have |
-| NFR12 | Extensibility | New Payment Providers | Hệ thống phải có khả năng tích hợp thêm các nhà cung cấp dịch vụ thanh toán mới. | Should Have |
-| NFR13 | Extensibility | New Notification Providers | Hệ thống phải có khả năng tích hợp thêm các nhà cung cấp dịch vụ thông báo mới. | Should Have |
+ERD dưới đây mô hình hóa các thực thể dữ liệu chính cần thiết cho CAB System MVP, dựa trên quy trình đặt xe, phân công tài xế, thực hiện chuyến, thanh toán và đánh giá.
+
+```mermaid
+erDiagram
+
+    USER {
+        int user_id PK
+        string username
+        string password
+        string role
+        string status
+        datetime created_at
+    }
+
+    CUSTOMER {
+        int customer_id PK
+        int user_id FK
+        string full_name
+        string phone
+        string email
+        string address
+    }
+
+    DRIVER {
+        int driver_id PK
+        int user_id FK
+        string full_name
+        string phone
+        string license_number
+        string status
+        boolean available
+        decimal latitude
+        decimal longitude
+    }
+
+    VEHICLE {
+        int vehicle_id PK
+        int driver_id FK
+        string license_plate
+        string vehicle_type
+        string brand
+        string model
+        string status
+    }
+
+    TRIP {
+        int trip_id PK
+        int customer_id FK
+        int driver_id FK
+        int vehicle_id FK
+        string pickup_location
+        string destination
+        string trip_status
+        datetime request_time
+        datetime start_time
+        datetime end_time
+        decimal fare
+    }
+
+    PAYMENT {
+        int payment_id PK
+        int trip_id FK
+        string payment_method
+        decimal amount
+        string payment_status
+        string transaction_ref
+        datetime payment_time
+    }
+
+    RATING {
+        int rating_id PK
+        int trip_id FK
+        int customer_id FK
+        int driver_id FK
+        int score
+        string comment
+        datetime created_at
+    }
+
+    NOTIFICATION {
+        int notification_id PK
+        int user_id FK
+        int trip_id FK
+        string notification_type
+        string message
+        string status
+        datetime created_at
+    }
+
+    USER ||--o| CUSTOMER : has
+    USER ||--o| DRIVER : has
+
+    DRIVER ||--o{ VEHICLE : owns
+
+    CUSTOMER ||--o{ TRIP : books
+    DRIVER ||--o{ TRIP : accepts
+    VEHICLE ||--o{ TRIP : used_for
+
+    TRIP ||--o{ PAYMENT : has
+    TRIP ||--o| RATING : receives
+    TRIP ||--o{ NOTIFICATION : generates
+
+    CUSTOMER ||--o{ RATING : gives
+    DRIVER ||--o{ RATING : receives
+
+    USER ||--o{ NOTIFICATION : receives
+```
+
+### Main Entities
+
+| Entity | Vai trò |
+|---|---|
+| **USER** | Lưu thông tin tài khoản, xác thực và vai trò người dùng trong hệ thống. |
+| **CUSTOMER** | Lưu thông tin khách hàng sử dụng dịch vụ đặt xe. |
+| **DRIVER** | Lưu hồ sơ tài xế, trạng thái hoạt động, trạng thái sẵn sàng và vị trí hiện tại. |
+| **VEHICLE** | Lưu thông tin phương tiện của tài xế. |
+| **TRIP** | Lưu thông tin yêu cầu đặt xe và toàn bộ thông tin liên quan đến chuyến đi. |
+| **PAYMENT** | Lưu thông tin giao dịch thanh toán của chuyến đi. |
+| **RATING** | Lưu đánh giá của khách hàng dành cho tài xế sau khi hoàn thành chuyến. |
+| **NOTIFICATION** | Lưu thông tin các thông báo liên quan đến chuyến đi được gửi cho người dùng. |
 
 ## 12. EXCEPTION CASES
 

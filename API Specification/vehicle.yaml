@@ -1,22 +1,22 @@
 openapi: 3.0.3
 info:
-  title: CAB System - Vehicle API
+  title: CAB System - Vehicle API (FULL CRUD)
   version: 1.0.0
-  description: 'FR05, FR28: quản lý thông tin phương tiện.'
+  description: FR05, FR28. Quản lý phương tiện là tài nguyên quản trị nên có đủ CRUD.
 servers:
 - url: http://localhost:8080/api/v1
   description: Local development server
 tags:
 - name: Vehicles
 paths:
-  /drivers/me/vehicles:
+  /vehicles:
     get:
       tags:
       - Vehicles
-      summary: Xem phương tiện của tài xế
+      summary: READ - Danh sách vehicles
       responses:
         '200':
-          description: Danh sách phương tiện
+          description: Danh sách dữ liệu
           content:
             application/json:
               schema:
@@ -26,21 +26,39 @@ paths:
     post:
       tags:
       - Vehicles
-      summary: Thêm phương tiện
+      summary: CREATE - Tạo vehicles
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VehicleRequest'
+              $ref: '#/components/schemas/VehicleCreateRequest'
       responses:
         '201':
-          description: Thêm phương tiện thành công
-  /drivers/me/vehicles/{vehicleId}:
-    patch:
+          description: Tạo thành công
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /vehicles/{vehicleId}:
+    get:
       tags:
       - Vehicles
-      summary: Cập nhật thông tin phương tiện
+      summary: READ - Chi tiết vehicles
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Chi tiết dữ liệu
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+      - Vehicles
+      summary: UPDATE - Cập nhật vehicles
       parameters:
       - name: vehicleId
         in: path
@@ -53,10 +71,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VehicleRequest'
+              $ref: '#/components/schemas/VehicleUpdateRequest'
       responses:
         '200':
-          description: Cập nhật phương tiện thành công
+          description: Cập nhật thành công
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+      - Vehicles
+      summary: DELETE - Xóa vehicles
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: Xóa thành công
         '404':
           $ref: '#/components/responses/NotFound'
 components:
@@ -80,11 +114,28 @@ components:
           type: string
         status:
           type: string
-    VehicleRequest:
+    VehicleCreateRequest:
       type: object
       required:
+      - driverId
       - licensePlate
       - vehicleType
+      properties:
+        driverId:
+          type: integer
+          format: int64
+        licensePlate:
+          type: string
+        vehicleType:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        status:
+          type: string
+    VehicleUpdateRequest:
+      type: object
       properties:
         licensePlate:
           type: string
@@ -96,32 +147,13 @@ components:
           type: string
         status:
           type: string
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
   responses:
     BadRequest:
       description: Dữ liệu yêu cầu không hợp lệ
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
-      description: Chưa xác thực hoặc thông tin xác thực không hợp lệ
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+      description: Chưa xác thực hoặc không đủ quyền
     NotFound:
       description: Không tìm thấy tài nguyên
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

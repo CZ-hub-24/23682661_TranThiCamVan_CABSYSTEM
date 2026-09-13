@@ -1,32 +1,71 @@
 openapi: 3.0.3
 info:
-  title: CAB System - Customer API
+  title: CAB System - Customer API (FULL CRUD)
   version: 1.0.0
-  description: 'FR04: quản lý và cập nhật thông tin cá nhân khách hàng.'
+  description: FR04, FR28. Quản lý khách hàng là tài nguyên quản trị nên có đủ CRUD.
 servers:
 - url: http://localhost:8080/api/v1
   description: Local development server
 tags:
 - name: Customers
 paths:
-  /customers/me:
+  /customers:
     get:
       tags:
       - Customers
-      summary: Xem thông tin cá nhân
+      summary: READ - Danh sách customers
       responses:
         '200':
-          description: Thông tin khách hàng
+          description: Danh sách dữ liệu
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-    patch:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    post:
       tags:
       - Customers
-      summary: Cập nhật thông tin cá nhân
+      summary: CREATE - Tạo customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreateRequest'
+      responses:
+        '201':
+          description: Tạo thành công
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /customers/{customerId}:
+    get:
+      tags:
+      - Customers
+      summary: READ - Chi tiết customers
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Chi tiết dữ liệu
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+      - Customers
+      summary: UPDATE - Cập nhật customers
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         required: true
         content:
@@ -36,12 +75,24 @@ paths:
       responses:
         '200':
           description: Cập nhật thành công
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Customer'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+      - Customers
+      summary: DELETE - Xóa customers
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: Xóa thành công
+        '404':
+          $ref: '#/components/responses/NotFound'
 components:
   schemas:
     Customer:
@@ -53,6 +104,23 @@ components:
         userId:
           type: integer
           format: int64
+        fullName:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+          format: email
+        address:
+          type: string
+        status:
+          type: string
+    CustomerCreateRequest:
+      type: object
+      required:
+      - fullName
+      - phone
+      properties:
         fullName:
           type: string
         phone:
@@ -74,32 +142,15 @@ components:
           format: email
         address:
           type: string
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
+        status:
           type: string
   responses:
     BadRequest:
       description: Dữ liệu yêu cầu không hợp lệ
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
-      description: Chưa xác thực hoặc thông tin xác thực không hợp lệ
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+      description: Chưa xác thực hoặc không đủ quyền
     NotFound:
       description: Không tìm thấy tài nguyên
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

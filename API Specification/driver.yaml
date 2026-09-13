@@ -1,30 +1,72 @@
 openapi: 3.0.3
 info:
-  title: CAB System - Driver API
+  title: CAB System - Driver API (FULL CRUD)
   version: 1.0.0
-  description: 'FR05, FR16: hồ sơ, trạng thái hoạt động và vị trí tài xế.'
+  description: FR05, FR16, FR28, FR30. Quản lý tài xế là tài nguyên quản trị nên có
+    đủ CRUD.
 servers:
 - url: http://localhost:8080/api/v1
   description: Local development server
 tags:
 - name: Drivers
 paths:
-  /drivers/me:
+  /drivers:
     get:
       tags:
       - Drivers
-      summary: Xem hồ sơ tài xế
+      summary: READ - Danh sách drivers
       responses:
         '200':
-          description: Hồ sơ tài xế
+          description: Danh sách dữ liệu
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Driver'
-    patch:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Driver'
+    post:
       tags:
       - Drivers
-      summary: Cập nhật hồ sơ và trạng thái hoạt động
+      summary: CREATE - Tạo drivers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DriverCreateRequest'
+      responses:
+        '201':
+          description: Tạo thành công
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /drivers/{driverId}:
+    get:
+      tags:
+      - Drivers
+      summary: READ - Chi tiết drivers
+      parameters:
+      - name: driverId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Chi tiết dữ liệu
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+      - Drivers
+      summary: UPDATE - Cập nhật drivers
+      parameters:
+      - name: driverId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         required: true
         content:
@@ -34,15 +76,36 @@ paths:
       responses:
         '200':
           description: Cập nhật thành công
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Driver'
-  /drivers/me/location:
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+      - Drivers
+      summary: DELETE - Xóa drivers
+      parameters:
+      - name: driverId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: Xóa thành công
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /drivers/{driverId}/location:
     patch:
       tags:
       - Drivers
       summary: Cập nhật vị trí tài xế
+      parameters:
+      - name: driverId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         required: true
         content:
@@ -58,6 +121,9 @@ components:
       type: object
       properties:
         driverId:
+          type: integer
+          format: int64
+        userId:
           type: integer
           format: int64
         fullName:
@@ -76,6 +142,18 @@ components:
         longitude:
           type: number
           format: double
+    DriverCreateRequest:
+      type: object
+      required:
+      - fullName
+      - phone
+      properties:
+        fullName:
+          type: string
+        phone:
+          type: string
+        licenseNumber:
+          type: string
     DriverUpdateRequest:
       type: object
       properties:
@@ -101,32 +179,13 @@ components:
         longitude:
           type: number
           format: double
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
   responses:
     BadRequest:
       description: Dữ liệu yêu cầu không hợp lệ
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
-      description: Chưa xác thực hoặc thông tin xác thực không hợp lệ
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+      description: Chưa xác thực hoặc không đủ quyền
     NotFound:
       description: Không tìm thấy tài nguyên
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

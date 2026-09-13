@@ -1,0 +1,155 @@
+openapi: 3.0.3
+info:
+  title: CAB System - Fare & Payment API
+  version: 1.0.0
+  description: 'FR19-FR22, FR26: tính cước, thanh toán và xử lý thất bại.'
+servers:
+- url: http://localhost:8080/api/v1
+  description: Local development server
+tags:
+- name: Payments
+paths:
+  /trips/{tripId}/fare:
+    get:
+      tags:
+      - Payments
+      summary: Tính/xem cước chuyến đi
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Cước chuyến đi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fare'
+  /trips/{tripId}/payments:
+    post:
+      tags:
+      - Payments
+      summary: Thanh toán tiền mặt hoặc điện tử
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '201':
+          description: Giao dịch được tạo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+  /payments/{paymentId}/retry:
+    post:
+      tags:
+      - Payments
+      summary: Xử lý lại thanh toán điện tử thất bại
+      parameters:
+      - name: paymentId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Kết quả xử lý lại thanh toán
+components:
+  schemas:
+    Fare:
+      type: object
+      properties:
+        tripId:
+          type: integer
+          format: int64
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+          example: VND
+    PaymentRequest:
+      type: object
+      required:
+      - method
+      properties:
+        method:
+          type: string
+          enum:
+          - CASH
+          - ELECTRONIC
+        providerToken:
+          type: string
+          nullable: true
+          description: Token từ nhà cung cấp; không lưu dữ liệu thẻ/tài khoản nhạy
+            cảm.
+    Payment:
+      type: object
+      properties:
+        paymentId:
+          type: integer
+          format: int64
+        tripId:
+          type: integer
+          format: int64
+        method:
+          type: string
+        amount:
+          type: number
+          format: double
+        status:
+          type: string
+          enum:
+          - PENDING
+          - SUCCESS
+          - FAILED
+        transactionRef:
+          type: string
+          nullable: true
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: Dữ liệu yêu cầu không hợp lệ
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Chưa xác thực hoặc thông tin xác thực không hợp lệ
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Không tìm thấy tài nguyên
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearerAuth: []

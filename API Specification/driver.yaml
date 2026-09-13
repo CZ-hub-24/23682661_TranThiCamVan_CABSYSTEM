@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: CAB System - Driver API
+  version: 1.0.0
+  description: 'FR05, FR16: hồ sơ, trạng thái hoạt động và vị trí tài xế.'
+servers:
+- url: http://localhost:8080/api/v1
+  description: Local development server
+tags:
+- name: Drivers
+paths:
+  /drivers/me:
+    get:
+      tags:
+      - Drivers
+      summary: Xem hồ sơ tài xế
+      responses:
+        '200':
+          description: Hồ sơ tài xế
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+    patch:
+      tags:
+      - Drivers
+      summary: Cập nhật hồ sơ và trạng thái hoạt động
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DriverUpdateRequest'
+      responses:
+        '200':
+          description: Cập nhật thành công
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+  /drivers/me/location:
+    patch:
+      tags:
+      - Drivers
+      summary: Cập nhật vị trí tài xế
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+      responses:
+        '200':
+          description: Cập nhật vị trí thành công
+components:
+  schemas:
+    Driver:
+      type: object
+      properties:
+        driverId:
+          type: integer
+          format: int64
+        fullName:
+          type: string
+        phone:
+          type: string
+        licenseNumber:
+          type: string
+        status:
+          type: string
+        available:
+          type: boolean
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    DriverUpdateRequest:
+      type: object
+      properties:
+        fullName:
+          type: string
+        phone:
+          type: string
+        licenseNumber:
+          type: string
+        status:
+          type: string
+        available:
+          type: boolean
+    LocationRequest:
+      type: object
+      required:
+      - latitude
+      - longitude
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: Dữ liệu yêu cầu không hợp lệ
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Chưa xác thực hoặc thông tin xác thực không hợp lệ
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Không tìm thấy tài nguyên
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearerAuth: []

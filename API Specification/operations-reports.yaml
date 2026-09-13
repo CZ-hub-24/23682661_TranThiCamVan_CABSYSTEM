@@ -1,0 +1,152 @@
+openapi: 3.0.3
+info:
+  title: CAB System - Operations & Reports API
+  version: 1.0.0
+  description: 'FR28-FR34: quản trị vận hành, tra cứu giao dịch, phân quyền và báo
+    cáo.'
+servers:
+- url: http://localhost:8080/api/v1
+  description: Local development server
+tags:
+- name: Operations
+- name: Reports
+paths:
+  /operations/customers:
+    get:
+      tags:
+      - Operations
+      summary: Quản lý khách hàng
+      responses:
+        '200':
+          description: Danh sách khách hàng
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GenericItem'
+  /operations/drivers:
+    get:
+      tags:
+      - Operations
+      summary: Quản lý và kiểm tra trạng thái tài xế
+      responses:
+        '200':
+          description: Danh sách tài xế
+  /operations/vehicles:
+    get:
+      tags:
+      - Operations
+      summary: Quản lý phương tiện
+      responses:
+        '200':
+          description: Danh sách phương tiện
+  /operations/trips:
+    get:
+      tags:
+      - Operations
+      summary: Quản lý và theo dõi chuyến đang diễn ra
+      responses:
+        '200':
+          description: Danh sách chuyến
+  /operations/trips/{tripId}/support:
+    post:
+      tags:
+      - Operations
+      summary: Hỗ trợ xử lý chuyến bị lỗi
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Đã ghi nhận xử lý
+  /operations/payments:
+    get:
+      tags:
+      - Operations
+      summary: Tra cứu lịch sử giao dịch
+      responses:
+        '200':
+          description: Danh sách giao dịch
+  /reports/operations:
+    get:
+      tags:
+      - Reports
+      summary: Báo cáo hoạt động
+      responses:
+        '200':
+          description: Báo cáo số chuyến, doanh thu, tỷ lệ hoàn thành/hủy và hiệu
+            suất tài xế
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationsReport'
+components:
+  schemas:
+    OperationsReport:
+      type: object
+      properties:
+        totalTrips:
+          type: integer
+        revenue:
+          type: number
+          format: double
+        completionRate:
+          type: number
+          format: double
+        cancellationRate:
+          type: number
+          format: double
+        driverPerformance:
+          type: array
+          items:
+            type: object
+            properties:
+              driverId:
+                type: integer
+                format: int64
+              completedTrips:
+                type: integer
+              averageRating:
+                type: number
+                format: double
+    GenericItem:
+      type: object
+      additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: Dữ liệu yêu cầu không hợp lệ
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Chưa xác thực hoặc thông tin xác thực không hợp lệ
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Không tìm thấy tài nguyên
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearerAuth: []

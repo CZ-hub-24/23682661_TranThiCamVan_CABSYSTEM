@@ -267,26 +267,35 @@ flowchart TD
 | **BRU20** | Xử lý mất kết nối mạng | **Cần làm rõ:** Cách xử lý khi khách hàng hoặc tài xế mất kết nối chưa được xác định. |
 | **BRU21** | Thời gian lưu trữ dữ liệu | **Cần làm rõ:** Thời gian lưu trữ dữ liệu của hệ thống chưa được xác định. |
 
-## 10. BUSINESS RULES
+## 10. Exception Cases & Open Questions
 
-| ID | Business Rule | Description |
-|---|---|---|
-| BRL01 | Customer must be authenticated | Khách hàng phải đăng nhập trước khi sử dụng các chức năng đặt xe. |
-| BRL02 | Booking requires trip information | Một yêu cầu đặt xe phải có điểm đón, điểm trả và loại xe. |
-| BRL03 | Driver must be available | Chỉ tài xế đang ở trạng thái sẵn sàng mới được hệ thống xem xét để phân công chuyến. |
-| BRL04 | Driver matching is based on operational criteria | Hệ thống lựa chọn tài xế dựa trên vị trí, trạng thái sẵn sàng và các tiêu chí vận hành. |
-| BRL05 | Reassignment after rejection | Nếu tài xế từ chối hoặc không phản hồi, hệ thống phải tiếp tục tìm tài xế khác mà khách hàng không cần đặt lại chuyến. |
-| BRL06 | No driver available | Nếu không tìm được tài xế phù hợp, hệ thống phải thông báo cho khách hàng. |
-| BRL07 | Trip status follows the trip lifecycle | Trạng thái chuyến xe được cập nhật theo quá trình thực hiện: đã đến điểm đón → đã đón khách → đang di chuyển → hoàn thành. |
-| BRL08 | Fare is calculated after trip completion | Hệ thống tính cước dựa trên loại dịch vụ và thông tin chuyến đi khi chuyến xe được hoàn thành. |
-| BRL09 | Multiple payment methods | Khách hàng có thể thanh toán bằng tiền mặt hoặc thanh toán điện tử. |
-| BRL10 | External payment processing | Thanh toán điện tử được xử lý thông qua nhà cung cấp dịch vụ thanh toán bên ngoài. |
-| BRL11 | Sensitive payment data is not stored | CAB System không trực tiếp lưu trữ thông tin thẻ hoặc tài khoản thanh toán nhạy cảm. |
-| BRL12 | Payment failure handling | Khi thanh toán thất bại, hệ thống phải thông báo cho khách hàng và cho phép thực hiện lại theo chính sách. |
-| BRL13 | Rating after completed trip | Khách hàng chỉ thực hiện đánh giá sau khi chuyến xe đã hoàn thành. |
-| BRL14 | Role-based access | Quyền truy cập vào các chức năng quản lý phải được kiểm soát dựa trên vai trò của người dùng. |
-| BRL15 | Driver location is used for matching and tracking | Thông tin vị trí tài xế được sử dụng để hỗ trợ phân công và theo dõi chuyến xe. |
-| BRL16 | Notifications are triggered by business events | Hệ thống gửi thông báo khi xảy ra các sự kiện như phân công tài xế, tài xế đến điểm đón, hoàn thành chuyến và kết quả thanh toán. |
+### 10.1. Các trường hợp ngoại lệ
+
+| ID | Quy trình | Trường hợp ngoại lệ | Cách xử lý |
+|---|---|---|---|
+| **EX01** | Tìm tài xế | Không tìm được tài xế phù hợp | Hệ thống thông báo rõ ràng cho khách hàng rằng không tìm được tài xế. |
+| **EX02** | Tìm tài xế | Tài xế được đề xuất không phản hồi | Hệ thống tiếp tục tìm tài xế phù hợp khác mà không yêu cầu khách hàng tạo lại yêu cầu. |
+| **EX03** | Tìm tài xế | Tài xế từ chối chuyến | Hệ thống tiếp tục tìm tài xế phù hợp khác mà không yêu cầu khách hàng tạo lại yêu cầu. |
+| **EX04** | Thanh toán | Thanh toán điện tử thất bại | Hệ thống thông báo cho khách hàng và cho phép xử lý lại theo chính sách của doanh nghiệp. |
+| **EX05** | Chuyến đi | Chuyến đi xảy ra lỗi | Nhân viên vận hành kiểm tra và hỗ trợ xử lý trường hợp chuyến bị lỗi. |
+| **EX06** | Kết nối | Khách hàng hoặc tài xế mất kết nối mạng | Cách xử lý cụ thể chưa được xác định và cần xác nhận thêm với khách hàng. |
+| **EX07** | Bảo mật | Người dùng chưa được xác thực | Hệ thống không cho phép khách hàng hoặc tài xế sử dụng các chức năng yêu cầu tài khoản khi chưa được xác thực. |
+| **EX08** | Quản trị | Nhân viên không có quyền thực hiện thao tác nhạy cảm | Hệ thống kiểm soát quyền truy cập và ngăn các thao tác quản trị không được phép. |
+
+### 10.2. Những điểm còn chưa rõ cần xác nhận với khách hàng
+
+| ID | Chủ đề | Điểm chưa rõ | Câu hỏi cần xác nhận |
+|---|---|---|---|
+| **OQ01** | Tính cước | Cách tính tiền chuyến chưa được chốt. | Cước được tính dựa trên những yếu tố nào và công thức tính cụ thể như thế nào? |
+| **OQ02** | Ưu tiên tài xế | Tiêu chí ưu tiên tài xế chưa được xác định đầy đủ. | Hệ thống ưu tiên tài xế dựa trên khoảng cách, thời gian chờ, trạng thái hoạt động hay các tiêu chí nào khác? |
+| **OQ03** | Phản hồi tài xế | Chưa xác định thời gian tài xế phải phản hồi yêu cầu chuyến. | Tài xế có bao nhiêu thời gian để chấp nhận hoặc từ chối trước khi hệ thống chuyển sang tài xế khác? |
+| **OQ04** | Hủy chuyến | Chính sách hủy chuyến chưa được chốt. | Ai được phép hủy chuyến, được hủy ở thời điểm nào và có áp dụng phí hủy hay không? |
+| **OQ05** | Mất kết nối mạng | Chưa xác định cách xử lý khi khách hàng hoặc tài xế mất kết nối. | Hệ thống xử lý trạng thái chuyến và cập nhật dữ liệu như thế nào khi mất kết nối mạng? |
+| **OQ06** | Lưu trữ dữ liệu | Chưa xác định thời gian lưu trữ dữ liệu. | Dữ liệu khách hàng, chuyến đi, vị trí, giao dịch và log cần được lưu trong bao lâu? |
+| **OQ07** | Thanh toán thất bại | Chính sách xử lý lại thanh toán điện tử chưa được quy định cụ thể. | Khách hàng được phép thử thanh toán lại bao nhiêu lần và trong khoảng thời gian nào? |
+| **OQ08** | Tìm tài xế | Chưa xác định giới hạn của quá trình tìm tài xế. | Hệ thống tiếp tục tìm tài xế trong bao lâu hoặc tối đa bao nhiêu tài xế trước khi thông báo thất bại? |
+| **OQ09** | Vị trí tài xế | Chưa xác định tần suất cập nhật vị trí tài xế. | Vị trí tài xế được cập nhật với tần suất bao nhiêu để hỗ trợ tìm tài xế và dự kiến thời gian đến? |
+| **OQ10** | Phân quyền quản trị | Chưa xác định chi tiết các vai trò và quyền quản trị. | Có những vai trò quản trị nào và mỗi vai trò được phép thực hiện những chức năng nào? |
 
 ## 11. NON-FUNCTIONAL REQUIREMENTS
 
